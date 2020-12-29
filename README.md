@@ -1,5 +1,6 @@
 # 8-Queen Puzzle Using iterative repair algorithm 
 
 ## Todos:
-- [ ] Make it faster.
+- [x] Make it faster.
+- [x] Clean code.
 - [ ] found other solutions.
