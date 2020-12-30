@@ -17,4 +17,4 @@ board.solve
 - [x] Make it faster.
 - [x] Clean code.
 - [x] Found other solutions.
-- [ ] Write a small document and usage in README
+- [x] Write a small document and usage in README
