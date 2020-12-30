@@ -3,8 +3,9 @@ require_relative 'home.rb'
 class Board
 
   attr_accessor :board_length, :filled_char
-  def initialize(board_length, filled_char = "0")
+  def initialize(board_length, required_answers: 1, filled_char: "0")
     @board_length = board_length
+    @required_answers = required_answers
     @homes = generate_homes()
     @filled_char = filled_char
   end
@@ -38,24 +39,39 @@ class Board
     end
   end
 
-  def solve(x, y) 
-    home = find(x, y)
-    if x > @board_length
-      previous_home = @homes.select {|h| h.is_filled && h.y == y-1} .last
-      previous_home.clean
-      solve(previous_home.x+1, y-1)
-    elsif x == @board_length && home.can_capture?(@homes)
-      previous_home = @homes.select {|h| h.is_filled && h.y == y-1} .last
-      previous_home.clean
-      solve(previous_home.x+1, y-1)
-    elsif home.can_capture?(@homes)
-      solve(x+1, y)
-    elsif y == @board_length
-      home.fill
-      print_homes
-    else
-      home.fill
-      solve(1, y+1)
+  def previous_home(home, y) 
+    previous_home = @homes.select {|home| home.is_filled && home.y == y-1} .last
+  end
+
+  def solve(x = 1, y = 1, calculated_answers = 0) 
+    unless calculated_answers == @required_answers
+      home = find(x, y)
+      if x > @board_length
+        pre_home = previous_home(home, y)
+        pre_home.clean
+        solve(pre_home.x+1, y-1, calculated_answers)
+      elsif x == @board_length && home.can_capture?(@homes)
+        pre_home = previous_home(home, y)
+        pre_home = @homes.select {|h| h.is_filled && h.y == y-1} .last
+        pre_home.clean
+        solve(pre_home.x+1, y-1, calculated_answers)
+      elsif home.can_capture?(@homes)
+        solve(x+1, y, calculated_answers)
+      elsif y == @board_length
+        home.fill
+        puts "#{calculated_answers+1}:"
+        print_homes
+        unless calculated_answers+1 == @required_answers
+          home.clean
+          pre_home = previous_home(home, y)
+          pre_home = @homes.select {|h| h.is_filled && h.y == y-1} .last
+          pre_home.clean
+          solve(pre_home.x+1, y-1, calculated_answers+1)
+        end
+      else
+        home.fill
+        solve(1, y+1, calculated_answers)
+      end
     end
   end
 end
