@@ -3,4 +3,4 @@
 ## Todos:
 - [x] Make it faster.
 - [x] Clean code.
-- [ ] found other solutions.
+- [x] found other solutions.
