@@ -3,4 +3,5 @@
 ## Todos:
 - [x] Make it faster.
 - [x] Clean code.
-- [x] found other solutions.
+- [x] Found other solutions.
+- [ ] Write a small document and usage in README
