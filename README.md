@@ -5,7 +5,6 @@
 ### Create a new `Board` instance and call `Board#solve` on the instance.
 ```
 Board.new(board_length)
-
 ```
 For example:
 ```
